@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if (! test $# -eq 1)
+then
+    echo "Uso: $0 'programa.c'" >&2
+    exit 1
+fi
+
+if (! test -f $1 -o -r $1)
+then
+    echo "El fichero '$1' no existe o no se puede leer" >&2
+    exit 2
+fi
+
+nombre=$(echo $1 | cut -f1 -d ".")
+
+if (test -f nombre)
+then
+    rm nombre
+fi
+
+mpicc $1 -o $nombre
